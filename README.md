@@ -23,7 +23,7 @@ The application allows user to:
 ## Installation
 1. Clone Repository
 ```
-git clone git@github.com:Vidhya-Rajendran/ticket_mgmt_backend.git
+git clone git@github.com:Vidhya-Rajendran/ticket_mgmt_frontend.git
 ```
 2. Installing project requirements
 ```
