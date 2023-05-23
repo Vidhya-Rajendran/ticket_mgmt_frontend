@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+{% spaceless %}
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title> Ticket Management </title>
+
+    <!-- Bootstrap -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link media="all" type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/plug-ins/1.10.20/sorting/datetime-moment.js"></script>
+
+    
+    <!-- Custom CSS -->
+    <style type="text/css">
+      body{
+        background: #f9fbfe
+      }
+      label {
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      .ticketForm input, .ticketForm select, .ticketForm textarea{
+        line-height: 20px;
+        background: #fff;
+        border: 1px solid #f1f1f1;
+        font-size: 16px;
+        color: #324253;
+        border-radius: 5px;
+        box-shadow: none;
+        border-color: #c7cbd3;
+        width: 100%;
+        padding: 7px;
+      }
+      .ticketForm input:focus, .ticketForm input:focus-visible {
+        border-color: #3378ff;
+        outline: none;
+      }
+      .ticketForm p {
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+      .auth-logo{
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        margin-top: 1rem;
+      }
+
+      .card{
+        background: #fff;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        -ms-box-shadow: 0 10px 30px 0 rgba(0,60,179,.05);
+        -o-box-shadow: 0 10px 30px 0 rgba(0,60,179,.05);
+        box-shadow: 0 10px 30px 0 rgb(0 60 179 / 5%);
+        border: 0 solid #dfe7ff;
+      }
+      .table td, .table th {
+        padding: .75rem;
+        vertical-align: middle;
+        border: none;
+      }
+
+      .btn-button {
+        background-color: #ec008c;
+        border-color: #ec008c;
+        color: #fff !important;
+      }
+
+      .btn-button:active, .btn-button:hover, .btn-button:focus {
+        background-color: #cc0079;
+        color: #fff !important;
+        border-color: #cc0079 !important;
+      }
+
+      #dtBasicExample_length{
+        display: none;
+      }
+
+      #search-input{
+        width: 30%;
+      }
+
+      #dtBasicExample_paginate{
+        display: flex;
+        justify-content: space-around;
+      }
+
+      @-webkit-keyframes fadeInCheckbox {
+        from {
+          opacity: 0;
+          -webkit-transform: rotateZ(-20deg);
+        }
+        to {
+          opacity: 1;
+          -webkit-transform: rotateZ(0deg);
+        }
+      }
+
+      @keyframes fadeInCheckbox {
+        from {
+          opacity: 0;
+          transform: rotateZ(-20deg);
+        }
+        to {
+          opacity: 1;
+          transform: rotateZ(0deg);
+        }
+      }
+    </style>
+
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="row align-items-center justify-content-center" style="margin-top: 10%" >
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </body>
+  {% block javascript %}
+  {% endblock %}
+</html>
+{% endspaceless %}

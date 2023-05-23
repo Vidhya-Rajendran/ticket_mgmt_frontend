@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="col-md-12 mb-3">
+    <div class="card">
+        <div class="card-body ticketForm">
+            <h4 class="mb-4 mt-3 font-weight-bold text-center">Ticket List</h4>
+
+            <div class="d-flex justify-content-end" style="padding: 10px;">
+                <button 
+                    class="btn btn-primary btn-md mb-1 mt-1" 
+                    style="font-weight:bold" 
+                    onclick="location.href='{% url 'ticket:create'%}'">
+                    Add Ticket
+                </button>
+            </div>
+            <div class="mb-3 mt-2">
+                <label for="search-input">Search:</label>
+                <input type="text" id="search-input">
+            </div>    
+
+            <div class="table-responsive">
+                <table id="dtBasicExample" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">View</th>
+                            <th style="text-align: center">Ticket Number</th>
+                            <th style="text-align: center">Status</th>
+                            <th style="text-align: center">Description</th>
+                            <th style="text-align: center">Created At</th>
+                            <th style="text-align: center">Resolution End Date</th>
+                            <th style="text-align: center">Assigned To</th>
+                            <th style="text-align: center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                        <tr >
+                            <td style="text-align: center">
+                                <button 
+                                    class="btn btn-md mb-1 mt-1" 
+                                    style="font-weight:bold" 
+                                    onclick="location.href='{% url 'ticket:view' ticket.id%}'">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                            <td style="text-align: center">{{ ticket.number }}</td>
+                            <td style="text-align: center">{{ ticket.status }}</td>
+                            <td style="text-align: center">{{ ticket.description }}</td>
+                            <td style="text-align: center">{{ticket.created_at}}</td>
+                            <td style="text-align: center">{{ ticket.resolution_end_date }}</td>
+                            <td class="" style="text-align: center">{{ ticket.assigned_to }}</td>
+                            <td class="d-flex justify-content-between" style="text-align: center">
+                                <button 
+                                    class="btn btn-md mb-1 mt-1" 
+                                    style="font-weight:bold" 
+                                    onclick="location.href='{% url 'ticket:edit' ticket.id %}'">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button 
+                                    class="btn btn-md mb-1 mt-1" 
+                                    style="font-weight:bold" 
+                                    onclick="location.href='{% url 'ticket:delete' ticket.id  %}'">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        var dataTable = $('#dtBasicExample').DataTable({
+            // Specify your DataTable options here
+            searching: false,  // Disable frontend searching
+        });
+
+        // Search on Enter key press
+        var searchInput = $('#search-input');
+        searchInput.on('keyup', function(e) {
+            e.preventDefault();
+            if(e.keyCode == 13){
+                var searchValue = $(this).val();
+                dataTable.search(searchValue).draw();
+                $.ajax({
+                    url: 'http://localhost:8000/api/tickets/?search=' + searchValue,
+                    type: 'GET',
+                    success: function(response) {
+                        $('#dtBasicExample').DataTable().clear().draw();
+                        response.forEach((ticket) => {
+                            const viewButton = '<button class="btn btn-md mb-1 mt-1" style="font-weight:bold" id="view-button" onclick="redirectToView('+ticket.id+')"><i class="fas fa-eye"></i></button>'
+                            const editButton = '<button class="btn btn-md mb-1 mt-1" style="font-weight:bold" id="edit-button" onclick="redirectToEdit('+ticket.id+')"><i class="fas fa-pen"></i></button>'
+                            const deleteButton = '<button class="btn btn-md mb-1 mt-1" style="font-weight:bold" id="delete-button" onclick="redirectToDelete('+ticket.id+')"><i class="fas fa-trash"></i></button>'
+                            $('#dtBasicExample').DataTable().row.add([
+                                viewButton,
+                                ticket.number,
+                                ticket.status,
+                                ticket.description,
+                                ticket.created_at,
+                                ticket.resolution_end_date,
+                                ticket.assigned_to,
+                                '<td class="d-flex justify-content-between" style="text-align: center">' + editButton + deleteButton + '</td>',
+                            ]);
+                          });
+                        $('#dtBasicExample').DataTable().draw();
+                    },
+                    error: function(response) {
+                    // Handle the error response
+                    console.log('Error:', response.responseText);
+                    }
+                });
+            }
+        });
+    });
+    function redirectToView(ticketId) {
+        const url = '{% url "ticket:view" 0 %}'.replace('0', ticketId);
+        window.location.href = url;
+    }
+    function redirectToEdit(ticketId) {
+        const url = '{% url "ticket:edit" 0 %}'.replace('0', ticketId);
+        window.location.href = url;
+    }
+    function redirectToDelete(ticketId) {
+        const url = '{% url "ticket:delete" 0 %}'.replace('0', ticketId);
+        window.location.href = url;
+    }
+    function format(inputDate) {
+        let date, month, year;
+        date = inputDate.getDate();
+        month = inputDate.getMonth() + 1;
+        year = inputDate.getFullYear();
+          date = date
+              .toString()
+              .padStart(2, '0');
+          month = month
+              .toString()
+              .padStart(2, '0');
+        return `${date}/${month}/${year}`;
+      }
+</script>
+{% endblock%}

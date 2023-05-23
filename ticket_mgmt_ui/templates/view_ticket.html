@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="col-md-6 mb-3">
+    <div class="card">
+        <div class="card-body ticketForm">
+            <h5 class="mb-4 mt-2 font-weight-bold text-center">View Ticket - {{ticket.number}}</h5>
+            <hr>
+            <div class="table-responsive">
+                <table class="table ">
+                    <tr>
+                        <td>Ticket Number</td>
+                        <td>{{ ticket.number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>{{ ticket.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Created At</td>
+                        <td>{{ ticket.created_at }}</td>
+                    </tr>
+                    <tr>
+                        <td>Resolution End Date</td>
+                        <td>{{ ticket.resolution_end_date_formatted }}</td>
+                    </tr>
+                    <tr>
+                        <td>Assigned To</td>
+                        <td>{{ ticket.assigned_to }}</td>
+                    </tr>
+                    <tr>
+                        <td>Status</td>
+                        <td>{{ ticket.status }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-end" style="padding: 10px;">
+                <button class="btn btn-primary btn-md mb-1 mt-1" style="font-weight:bold" onclick="location.href='{% url 'ticket:list' %}'">Back to Ticket List</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
