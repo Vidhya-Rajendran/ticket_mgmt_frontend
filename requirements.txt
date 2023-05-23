@@ -1,3 +1,2 @@
 Django==4.1.9
-psycopg2==2.9.6
 django-method-override==1.0.4
