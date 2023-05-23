@@ -1,4 +1,4 @@
-Ticket Management Frontend
+# Ticket Management Frontend
 
 Simple application in Python Django to manage tickets.
 
@@ -15,6 +15,9 @@ The application allows user to:
 ## Tech Stack
 1. Python
 2. Django
+3. HTML
+4. CSS
+5. JQuery
 
 
 ## Installation
